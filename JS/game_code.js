@@ -28,24 +28,24 @@ const loadSceneMock = () => {
 		0,
 		0,
 		10,
-		new BABYLON.Vector3(11, 17, -3),
+		new BABYLON.Vector3(10, 17, -3),
 		scene
 	)
 	camera.wheelDeltaPercentage = 0.01
-	camera.setTarget(new BABYLON.Vector3(11, 0.2, 11))
-	//camera.attachControl(canvas, true)
+	camera.setTarget(new BABYLON.Vector3(10, 0.2, 10))
+	camera.attachControl(canvas, true)
 
 	const globallight = new BABYLON.HemisphericLight(
 		'light',
 		new BABYLON.Vector3(0, 0.5, -0.3)
 	)
-	globallight.intensity = 0.8
+	globallight.intensity = 0.6
 
 	const dirlight = new BABYLON.DirectionalLight(
 		'dirlight',
 		new BABYLON.Vector3(-6.25, -12.5, 7.8)
 	)
-	dirlight.intensity = 0.4
+	dirlight.intensity = 0.3
 
 	const shadow = new BABYLON.ShadowGenerator(1024, dirlight)
 	shadow.usePoissonSampling = true
@@ -108,7 +108,7 @@ const loadSceneMock = () => {
 		let appleMaterial = new BABYLON.StandardMaterial('red')
 		appleMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0)
 		apple.material = appleMaterial
-		shadow.getShadowMap().renderList.push(apple)
+		//shadow.getShadowMap().renderList.push(apple)
 	}
 
 	const createSnakeHead = scene => {
@@ -129,7 +129,7 @@ const loadSceneMock = () => {
 		)
 		snakeHeadMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#06819c')
 		snakeHead.material = snakeHeadMaterial
-		shadow.getShadowMap().renderList.push(snakeHead)
+		//shadow.getShadowMap().renderList.push(snakeHead)
 	}
 
 	const createSnakeBody = scene => {
@@ -150,7 +150,7 @@ const loadSceneMock = () => {
 		)
 		snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
 		snakeBody.material = snakeCellMaterial
-		shadow.getShadowMap().renderList.push(snakeBody)
+		//shadow.getShadowMap().renderList.push(snakeBody)
 	}
 
 	const createSnakeTail = scene => {
@@ -168,7 +168,7 @@ const loadSceneMock = () => {
 		orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
 		orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
 		snakeTail.material = orangeMaterial
-		shadow.getShadowMap().renderList.push(snakeTail)
+		//shadow.getShadowMap().renderList.push(snakeTail)
 	}
 
 	const createSnake = scene => {
@@ -189,6 +189,7 @@ const GameDirectionKeys = Object.freeze({
 	Left: 'a',
 	Down: 's',
 	Right: 'd',
+	None: '',
 })
 
 class BabylonSnake {
@@ -199,11 +200,14 @@ class BabylonSnake {
 	gameStart = () => {
 		this._gameId += 1
 		this._gameScore = 0
+		this._maxGameScore = this._gameScore
+		this._gameLoopDelayMs = 100
 
 		// Reset object locations
 		this._snake = [
-			Math.round(this._gridWidth / 2) +
-				Math.round(this._gridHeight / 2) * this._gridWidth,
+			Math.round(this._gridWidth / 2) -
+				1 +
+				(Math.round(this._gridHeight / 2) - 1) * this._gridWidth,
 		]
 		this._updateApple()
 
@@ -222,11 +226,16 @@ class BabylonSnake {
 		console.log(score)
 		var stat_draw = document.getElementById('stat')
 		stat_draw.innerHTML = 'Game Start: ' + countGame
-		let maxScore = 0
+		let maxScore = this._maxGameScore
+		if (score > maxScore) {
+			maxScore = score
+			localStorage.setItem(maxScore, score)
+		}
+
 		var maxscore_draw = document.getElementById('maxscore')
 		maxscore_draw.innerHTML = 'High score: ' + +localStorage.getItem(maxScore)
 		// Reset directions inputs
-		this._snakeHeadDirection = GameDirectionKeys.Right
+		this._snakeHeadDirection = GameDirectionKeys.None
 		this._lastMoveDirection = this._snakeHeadDirection
 		this._snakeHeadDirectionHistory = []
 
@@ -270,20 +279,32 @@ class BabylonSnake {
 		//]
 		this._apple = 0
 		//this._snakeHeadDirection = GameDirectionKeys.Right
-		this._lastMoveDirection = this._snakeHeadDirection
-		this._snakeHeadDirectionHistory = []
+		//this._lastMoveDirection = this._snakeHeadDirection
+		//this._snakeHeadDirectionHistory = []
 
 		// Load scene
 		this._scene = loadSceneMock()
 
+		this._dirlight = new BABYLON.DirectionalLight(
+			'dirlight',
+			new BABYLON.Vector3(-6.25, -10, 7.8)
+		)
+		this._dirlight.intensity = 0.4
+
+		this._shadow = new BABYLON.ShadowGenerator(512, this._dirlight)
+		this._shadow.usePoissonSampling = true
+
 		this._snakeHeadMesh = this._scene.getMeshByName('snakeHead')
+		this._shadow.getShadowMap().renderList.push(this._snakeHeadMesh)
 		this._snakeBodyPrefab = this._scene.getMeshByName('snakeBody')
 		this._snakeBodyPrefab.isVisible = false
 		this._snakeTailMesh = this._scene.getMeshByName('snakeTail')
+		this._shadow.getShadowMap().renderList.push(this._snakeTailMesh)
 		this._snakeTailMesh.isVisible = false
 
 		this._snakeBodyMeshes = []
 		this._appleMesh = this._scene.getMeshByName('apple')
+		this._shadow.getShadowMap().renderList.push(this._appleMesh)
 
 		// Create UI
 		this._gameUI = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
@@ -348,7 +369,12 @@ class BabylonSnake {
 						this._snakeHeadMesh.rotation.y = Math.PI / 2
 						this._snakeHeadDirection = GameDirectionKeys.Down
 					}
-					break
+				//case GameDirectionKeys.None:
+				//	if (this._snake.length === 1) {
+				//		this._snakeHeadMesh.rotation.y = Math.PI
+				//this._snakeHeadDirection = GameDirectionKeys.None
+				//	}
+				//	break
 				default:
 					break
 			}
@@ -414,6 +440,10 @@ class BabylonSnake {
 			case GameDirectionKeys.Right:
 				nextMove = snakeHeadLocation + 1
 				this._lastMoveDirection = GameDirectionKeys.Right
+				break
+			case GameDirectionKeys.None:
+				nextMove = snakeHeadLocation
+				this._lastMoveDirection = GameDirectionKeys.None
 				break
 			default:
 				break
@@ -492,21 +522,25 @@ class BabylonSnake {
 			this._gameScore += 1
 			this._updateApple()
 
-			let maxScore = 0
+			if (this._gameLoopDelayMs > 75) {
+				this._gameLoopDelayMs -= 0.25
+			}
+
+			let maxScore = this._maxGameScore
 			let score = this._gameScore
-			let countGame = this._gameId
+			//let countGame = this._gameId
 			var score_draw = document.getElementById('score')
 			score_draw.innerHTML = score
 			console.log(score)
 			//var stat_draw = document.getElementById('stat')
 			//stat_draw.innerHTML = 'Game Over: ' + countGame
-			if (score > maxScore) {
-				maxScore = score
-				localStorage.setItem(maxScore, score)
-			}
+			//if (score > maxScore) {
+			//	maxScore = score
+			//	localStorage.setItem(maxScore, score)
+			//}
 
-			var maxscore_draw = document.getElementById('maxscore')
-			maxscore_draw.innerHTML = 'High score: ' + +localStorage.getItem(maxScore)
+			//var maxscore_draw = document.getElementById('maxscore')
+			//maxscore_draw.innerHTML = 'High score: ' + +localStorage.getItem(maxScore)
 
 			// Don't add body for first apple
 			// Add tail instead - implicit :(
@@ -515,6 +549,7 @@ class BabylonSnake {
 					`game${this._gameId}_snakeBody_${this._snakeBodyMeshes.length}`
 				)
 				this._snakeBodyMeshes.push(snakeBodyMesh)
+				this._shadow.getShadowMap().renderList.push(snakeBodyMesh)
 			}
 		} else {
 			this._snake.pop()
@@ -522,6 +557,8 @@ class BabylonSnake {
 		}
 
 		this._moveObjectsToGridPositions()
+
+		//return maxScore
 	}
 
 	// Game lifecycle logic

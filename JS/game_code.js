@@ -295,8 +295,8 @@ class BabylonSnake {
 		this._shadow.usePoissonSampling = true
 
 		this._ground = this._scene.getMeshByName('ground')
-		this._borderMaterial = new BABYLON.StandardMaterial('borderMat', scene)
-		this._borderMaterial.diffuseColor = new BABYLON.Color3(0.3, 0.3, 0.3)
+		//this._borderMaterial = new BABYLON.StandardMaterial('borderMat', scene)
+		//this._borderMaterial.diffuseColor = new BABYLON.Color3(0.3, 0.3, 0.3)
 
 		this._snakeHeadMesh = this._scene.getMeshByName('snakeHead')
 		this._shadow.getShadowMap().renderList.push(this._snakeHeadMesh)
@@ -530,9 +530,9 @@ class BabylonSnake {
 				this._gameLoopDelayMs -= 0.25
 			}
 
-			if (this._gameScore > 5) {
-				this._ground.material = this._borderMaterial
-			}
+			//if (this._gameScore > 5) {
+			//	this._ground.material = this._borderMaterial
+			//}
 
 			let maxScore = this._maxGameScore
 			let score = this._gameScore

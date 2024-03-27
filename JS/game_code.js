@@ -233,7 +233,7 @@ class BabylonSnake {
 		}
 
 		var maxscore_draw = document.getElementById('maxscore')
-		maxscore_draw.innerHTML = 'High score: ' + +localStorage.getItem(maxScore)
+		maxscore_draw.innerHTML = 'Speed: ' + this._gameLoopDelayMs
 		// Reset directions inputs
 		this._snakeHeadDirection = GameDirectionKeys.None
 		this._lastMoveDirection = this._snakeHeadDirection
@@ -293,6 +293,10 @@ class BabylonSnake {
 
 		this._shadow = new BABYLON.ShadowGenerator(512, this._dirlight)
 		this._shadow.usePoissonSampling = true
+
+		this._ground = this._scene.getMeshByName('ground')
+		this._borderMaterial = new BABYLON.StandardMaterial('borderMat', scene)
+		this._borderMaterial.diffuseColor = new BABYLON.Color3(0.3, 0.3, 0.3)
 
 		this._snakeHeadMesh = this._scene.getMeshByName('snakeHead')
 		this._shadow.getShadowMap().renderList.push(this._snakeHeadMesh)
@@ -526,6 +530,10 @@ class BabylonSnake {
 				this._gameLoopDelayMs -= 0.25
 			}
 
+			if (this._gameScore > 5) {
+				this._ground.material = this._borderMaterial
+			}
+
 			let maxScore = this._maxGameScore
 			let score = this._gameScore
 			//let countGame = this._gameId
@@ -539,8 +547,8 @@ class BabylonSnake {
 			//	localStorage.setItem(maxScore, score)
 			//}
 
-			//var maxscore_draw = document.getElementById('maxscore')
-			//maxscore_draw.innerHTML = 'High score: ' + +localStorage.getItem(maxScore)
+			var maxscore_draw = document.getElementById('maxscore')
+			maxscore_draw.innerHTML = 'Speed: ' + this._gameLoopDelayMs
 
 			// Don't add body for first apple
 			// Add tail instead - implicit :(

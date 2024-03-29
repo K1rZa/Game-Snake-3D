@@ -311,7 +311,7 @@ class BabylonSnake {
 		this._shadow = new BABYLON.ShadowGenerator(512, this._dirlight)
 		this._shadow.usePoissonSampling = true
 
-		this._ground = this._scene.getMeshByName('ground')
+		//this._ground = this._scene.getMeshByName('ground')
 		//this._borderMaterial = new BABYLON.StandardMaterial('borderMat', scene)
 		//this._borderMaterial.diffuseColor = new BABYLON.Color3(0.3, 0.3, 0.3)
 

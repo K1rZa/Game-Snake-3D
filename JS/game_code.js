@@ -28,11 +28,11 @@ const loadSceneMock = () => {
 		0,
 		0,
 		10,
-		new BABYLON.Vector3(10, 17, -3),
+		new BABYLON.Vector3(11, 17, -3),
 		scene
 	)
 	camera.wheelDeltaPercentage = 0.01
-	camera.setTarget(new BABYLON.Vector3(10, 0.2, 10))
+	camera.setTarget(new BABYLON.Vector3(11, 0.2, 10))
 	camera.attachControl(canvas, true)
 
 	const globallight = new BABYLON.HemisphericLight(
@@ -56,30 +56,30 @@ const loadSceneMock = () => {
 		//	w: 21,
 		//}
 
-		/*const ground = new BABYLON.MeshBuilder.CreateBox('ground', {
-			width: 21,
+		const ground = new BABYLON.MeshBuilder.CreateBox('ground', {
+			width: 23,
 			height: 1,
-			depth: 21,
+			depth: 27,
 		})
-		ground.position = new BABYLON.Vector3(10, 0, 10)
+		ground.position = new BABYLON.Vector3(11, 0, 13)
 		const borderLeft = new BABYLON.MeshBuilder.CreateBox('borderleft', {
 			width: 1,
 			height: 2,
-			depth: 21,
+			depth: 27,
 		})
-		borderLeft.position = new BABYLON.Vector3(-1, 0.5, 10)
+		borderLeft.position = new BABYLON.Vector3(-1, 0.5, 13)
 		const borderRight = new BABYLON.MeshBuilder.CreateBox('borderright', {
 			width: 1,
 			height: 2,
-			depth: 21,
+			depth: 27,
 		})
-		borderRight.position = new BABYLON.Vector3(21, 0.5, 10)
+		borderRight.position = new BABYLON.Vector3(23, 0.5, 13)
 		const borderUp = new BABYLON.MeshBuilder.CreateBox('borderup', {
-			width: 23,
+			width: 25,
 			height: 2,
 			depth: 1,
 		})
-		borderUp.position = new BABYLON.Vector3(10, 0.5, 21)
+		borderUp.position = new BABYLON.Vector3(11, 0.5, 27)
 
 		const groundMaterial = new BABYLON.StandardMaterial('groundMat', scene)
 		groundMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#8f8f8f')
@@ -94,18 +94,20 @@ const loadSceneMock = () => {
 		borderRight.material = borderMaterial
 		borderUp.material = borderMaterial
 		ground.material = groundMaterial
-		ground.receiveShadows = true*/
+		ground.receiveShadows = true
 
-		BABYLON.SceneLoader.ImportMesh(
-			'',
-			'./Resources/Glb/',
-			'Basket_Grid.glb',
-			scene,
-			function (meshArray) {
-				ground = meshArray[1]
-				ground.scaling = new BABYLON.Vector3(2, 2, 2)
-			}
-		)
+		//BABYLON.SceneLoader.ImportMesh(
+		//	'',
+		//	'./Resources/Glb/',
+		//	'Basket_Grid.glb',
+		//	scene,
+		//	function (meshArray) {
+		//		ground1 = meshArray[0]
+		//		ground1.scaling = new BABYLON.Vector3(-5, 5, 5)
+		//		//ground1.rotation.x = (3 * Math.PI) / 2
+		//		ground1.position = new BABYLON.Vector3(9.5, -2.5, //10.5)
+		//	}
+		//)
 	}
 
 	const createApple = scene => {
@@ -213,7 +215,7 @@ class BabylonSnake {
 		this._gameId += 1
 		this._gameScore = 0
 		this._maxGameScore = this._gameScore
-		this._gameLoopDelayMs = 100
+		this._gameLoopDelayMs = 1000
 
 		// Reset object locations
 		this._snake = [
@@ -294,8 +296,8 @@ class BabylonSnake {
 	constructor() {
 		// Game props
 		this._gameLoopDelayMs = 100
-		this._gridHeight = 21
-		this._gridWidth = 21
+		this._gridHeight = 27
+		this._gridWidth = 23
 		this._gridSize = this._gridHeight * this._gridWidth
 
 		// Game states

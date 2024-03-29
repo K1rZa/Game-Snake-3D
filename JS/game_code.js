@@ -258,6 +258,7 @@ class BabylonSnake {
 
 		// Remove restart button if present
 		this._gameUI.removeControl(this._restartBtn)
+		this._gameUI.removeControl(this._gameOverText)
 
 		// Start game
 		this._scene.onBeforeRenderObservable.runCoroutineAsync(this._runGameLoop())
@@ -320,16 +321,29 @@ class BabylonSnake {
 			'restartBtn',
 			'Restart'
 		)
-		this._restartBtn.width = '48px'
-		this._restartBtn.height = '86px'
+		this._restartBtn.width = '100px'
+		this._restartBtn.height = '100px'
 		this._restartBtn.thickness = 0
-		this._restartBtn.verticalAlignment = 0
-		this._restartBtn.horizontalAlignment = 1
-		this._restartBtn.top = '-16px'
+		this._restartBtn.verticalAlignment = 2
+		this._restartBtn.horizontalAlignment = 2
+		this._restartBtn.fontSize = '2.25%'
+		//this._restartBtn.top = '-16px'
 		//when the button is down, make pause menu visable and add control to it
 		this._restartBtn.onPointerDownObservable.add(() => {
 			this.gameStart()
 		})
+
+		this._gameOverText = new BABYLON.GUI.TextBlock('gameOverText')
+		this._gameOverText.width = '600px'
+		this._gameOverText.height = '100px'
+		this._gameOverText.verticalAlignment = 2
+		this._gameOverText.horizontalAlignment = 2
+		this._gameOverText.textVerticalAlignment = 2
+		this._gameOverText.textHorizontalAlignment = 2
+		this._gameOverText.top = '-7.5%'
+		this._gameOverText.fontSize = '10%'
+		this._gameOverText.color = '#ffffff'
+		this._gameOverText.text = 'Game Over!'
 	}
 
 	// Input handling
@@ -597,6 +611,7 @@ class BabylonSnake {
 		this._scene.onBeforeRenderObservable.cancelAllCoroutines()
 		this._scene.onKeyboardObservable.removeCallback(this._inputHandling)
 		this._gameUI.addControl(this._restartBtn)
+		this._gameUI.addControl(this._gameOverText)
 		console.log(`Game over your score is : ${this._gameScore}!`)
 	}
 }

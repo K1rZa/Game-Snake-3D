@@ -123,12 +123,13 @@ const loadSceneMock = () => {
 		)
 		snakeHead.position.y = 1
 
-		const snakeHeadMaterial = new BABYLON.StandardMaterial(
-			'snakeHeadMat',
-			scene
-		)
-		snakeHeadMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#06819c')
-		snakeHead.material = snakeHeadMaterial
+		//const snakeHeadMaterial = new BABYLON.StandardMaterial(
+		//	'snakeHeadMat',
+		//	scene
+		//)
+		//snakeHeadMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#06819c')
+		//snakeHeadMaterial.alpha = 0.5
+		//snakeHead.material = snakeHeadMaterial
 		//shadow.getShadowMap().renderList.push(snakeHead)
 	}
 
@@ -144,12 +145,12 @@ const loadSceneMock = () => {
 		)
 		snakeBody.position.y = 1
 
-		const snakeCellMaterial = new BABYLON.StandardMaterial(
-			'snakeCellMat',
-			scene
-		)
-		snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
-		snakeBody.material = snakeCellMaterial
+		//const snakeCellMaterial = new BABYLON.StandardMaterial(
+		//	'snakeCellMat',
+		//	scene
+		//)
+		//snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
+		//snakeBody.material = snakeCellMaterial
 		//shadow.getShadowMap().renderList.push(snakeBody)
 	}
 
@@ -165,9 +166,9 @@ const loadSceneMock = () => {
 		)
 		snakeTail.position.y = 1
 
-		orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
-		orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
-		snakeTail.material = orangeMaterial
+		//orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
+		//orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
+		//snakeTail.material = orangeMaterial
 		//shadow.getShadowMap().renderList.push(snakeTail)
 	}
 
@@ -241,12 +242,16 @@ class BabylonSnake {
 
 		const snakeHeadMaterial = new BABYLON.StandardMaterial('snakeHeadMat')
 		snakeHeadMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#06819c')
+		//snakeHeadMaterial.diffuseTexture = new BABYLON.Texture(
+		//	'./Resources/9268160.jpg'
+		//)
 		this._snakeHeadMesh.material = snakeHeadMaterial
 		this._snakeHeadMesh.scaling = new BABYLON.Vector3(1, 1, 1)
 		const snakeCellMaterial = new BABYLON.StandardMaterial('snakeCellMat')
 		snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
+		//snakeCellMaterial.diffuseTexture = new BABYLON.Texture('./Resources/9268160.jpg')
 		this._snakeBodyPrefab.material = snakeCellMaterial
-		orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
+		const orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
 		orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
 		this._snakeTailMesh.material = orangeMaterial
 
@@ -625,6 +630,7 @@ class BabylonSnake {
 		this._gameUI.addControl(this._gameOverText)
 		const snakeDieMaterial = new BABYLON.StandardMaterial('snakeDieMat')
 		snakeDieMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1)
+		snakeDieMaterial.alpha = 0.5
 		this._snakeHeadMesh.material = snakeDieMaterial
 		this._snakeHeadMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5)
 		this._snakeBodyPrefab.material = snakeDieMaterial

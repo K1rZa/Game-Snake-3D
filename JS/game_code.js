@@ -28,11 +28,11 @@ const loadSceneMock = () => {
 		0,
 		0,
 		10,
-		new BABYLON.Vector3(11, 17, -3),
+		new BABYLON.Vector3(11, 20, -6),
 		scene
 	)
 	camera.wheelDeltaPercentage = 0.01
-	camera.setTarget(new BABYLON.Vector3(11, 0.2, 10))
+	camera.setTarget(new BABYLON.Vector3(11, 0.2, 13))
 	camera.attachControl(canvas, true)
 
 	const globallight = new BABYLON.HemisphericLight(

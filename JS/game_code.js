@@ -56,7 +56,7 @@ const loadSceneMock = () => {
 		//	w: 21,
 		//}
 
-		const ground = new BABYLON.MeshBuilder.CreateBox('ground', {
+		/*const ground = new BABYLON.MeshBuilder.CreateBox('ground', {
 			width: 21,
 			height: 1,
 			depth: 21,
@@ -94,7 +94,18 @@ const loadSceneMock = () => {
 		borderRight.material = borderMaterial
 		borderUp.material = borderMaterial
 		ground.material = groundMaterial
-		ground.receiveShadows = true
+		ground.receiveShadows = true*/
+
+		BABYLON.SceneLoader.ImportMesh(
+			'',
+			'./Resources/Glb/',
+			'Basket_Grid.glb',
+			scene,
+			function (meshArray) {
+				ground = meshArray[1]
+				ground.scaling = new BABYLON.Vector3(2, 2, 2)
+			}
+		)
 	}
 
 	const createApple = scene => {

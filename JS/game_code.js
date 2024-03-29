@@ -215,7 +215,7 @@ class BabylonSnake {
 		this._gameId += 1
 		this._gameScore = 0
 		this._maxGameScore = this._gameScore
-		this._gameLoopDelayMs = 1000
+		this._gameLoopDelayMs = 100
 
 		// Reset object locations
 		this._snake = [
@@ -355,6 +355,7 @@ class BabylonSnake {
 		this._restartBtn.thickness = 0
 		this._restartBtn.verticalAlignment = 2
 		this._restartBtn.horizontalAlignment = 2
+		this._restartBtn.top = '2.5%'
 		this._restartBtn.fontSize = '2.25%'
 		//this._restartBtn.top = '-16px'
 		//when the button is down, make pause menu visable and add control to it

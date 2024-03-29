@@ -239,6 +239,17 @@ class BabylonSnake {
 		this._lastMoveDirection = this._snakeHeadDirection
 		this._snakeHeadDirectionHistory = []
 
+		const snakeHeadMaterial = new BABYLON.StandardMaterial('snakeHeadMat')
+		snakeHeadMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#06819c')
+		this._snakeHeadMesh.material = snakeHeadMaterial
+		this._snakeHeadMesh.scaling = new BABYLON.Vector3(1, 1, 1)
+		const snakeCellMaterial = new BABYLON.StandardMaterial('snakeCellMat')
+		snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
+		this._snakeBodyPrefab.material = snakeCellMaterial
+		orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
+		orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
+		this._snakeTailMesh.material = orangeMaterial
+
 		//this._scene = loadSceneMock()
 
 		//this._snakeHeadMesh = this._scene.getMeshByName('snakeHead')
@@ -612,6 +623,12 @@ class BabylonSnake {
 		this._scene.onKeyboardObservable.removeCallback(this._inputHandling)
 		this._gameUI.addControl(this._restartBtn)
 		this._gameUI.addControl(this._gameOverText)
+		const snakeDieMaterial = new BABYLON.StandardMaterial('snakeDieMat')
+		snakeDieMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1)
+		this._snakeHeadMesh.material = snakeDieMaterial
+		this._snakeHeadMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5)
+		this._snakeBodyPrefab.material = snakeDieMaterial
+		this._snakeTailMesh.material = snakeDieMaterial
 		console.log(`Game over your score is : ${this._gameScore}!`)
 	}
 }

@@ -96,18 +96,18 @@ const loadSceneMock = () => {
 		ground.material = groundMaterial
 		ground.receiveShadows = true
 
-		//BABYLON.SceneLoader.ImportMesh(
-		//	'',
-		//	'./Resources/Glb/',
-		//	'Basket_Grid.glb',
-		//	scene,
-		//	function (meshArray) {
-		//		ground1 = meshArray[0]
-		//		ground1.scaling = new BABYLON.Vector3(-5, 5, 5)
-		//		//ground1.rotation.x = (3 * Math.PI) / 2
-		//		ground1.position = new BABYLON.Vector3(9.5, -2.5, //10.5)
-		//	}
-		//)
+		BABYLON.SceneLoader.ImportMesh(
+			'',
+			'./Resources/Glb/',
+			'Basket_Grid.glb',
+			scene,
+			function (meshArray) {
+				ground1 = meshArray[0]
+				ground1.scaling = new BABYLON.Vector3(-5, 5, 5)
+				ground1.rotation.x = (3 * Math.PI) / 2
+				ground1.position = new BABYLON.Vector3(10.5, -2.5, 16.5)
+			}
+		)
 	}
 
 	const createApple = scene => {

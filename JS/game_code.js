@@ -116,13 +116,13 @@ const loadSceneMock = () => {
 	const createApple = scene => {
 		let apple = BABYLON.MeshBuilder.CreateSphere(
 			'apple',
-			{ diameter: 1.2, segments: 32 },
+			{ diameter: 1.2, segments: 3 },
 			scene
 		)
 		apple.position.y = 1
 
 		let appleMaterial = new BABYLON.StandardMaterial('red')
-		appleMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#a30000')
+		appleMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#ffffff')
 		apple.material = appleMaterial
 		//shadow.getShadowMap().renderList.push(apple)
 	}

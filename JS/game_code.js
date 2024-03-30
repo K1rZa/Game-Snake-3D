@@ -155,7 +155,7 @@ const loadSceneMock = () => {
 			{
 				width: 1,
 				height: 0.8,
-				depth: 0.8,
+				depth: 1,
 			},
 			scene
 		)
@@ -174,9 +174,9 @@ const loadSceneMock = () => {
 		const snakeTail = new BABYLON.MeshBuilder.CreateBox(
 			'snakeTail',
 			{
-				width: 0.9,
-				height: 0.6,
-				depth: 0.6,
+				width: 1,
+				height: 0.7,
+				depth: 0.8,
 			},
 			scene
 		)
@@ -264,11 +264,14 @@ class BabylonSnake {
 		this._snakeHeadMesh.material = snakeHeadMaterial
 		this._snakeHeadMesh.scaling = new BABYLON.Vector3(1, 1, 1)
 		const snakeCellMaterial = new BABYLON.StandardMaterial('snakeCellMat')
-		snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
-		//snakeCellMaterial.diffuseTexture = new BABYLON.Texture('./Resources/9268160.jpg')
+		//snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
+		snakeCellMaterial.diffuseTexture = new BABYLON.Texture('./Resources/Textures/9268160.jpg')
 		this._snakeBodyPrefab.material = snakeCellMaterial
 		const orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
-		orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
+		//orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
+		orangeMaterial.diffuseTexture = new BABYLON.Texture(
+			'./Resources/Textures/9268160.jpg'
+		)
 		this._snakeTailMesh.material = orangeMaterial
 
 		//this._scene = loadSceneMock()

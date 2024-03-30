@@ -39,13 +39,13 @@ const loadSceneMock = () => {
 		'light',
 		new BABYLON.Vector3(0, 0.5, -0.3)
 	)
-	globallight.intensity = 0.6
+	globallight.intensity = 0.7
 
 	const dirlight = new BABYLON.DirectionalLight(
 		'dirlight',
 		new BABYLON.Vector3(-6.25, -12.5, 7.8)
 	)
-	dirlight.intensity = 0.3
+	dirlight.intensity = 0.5
 
 	const shadow = new BABYLON.ShadowGenerator(1024, dirlight)
 	shadow.usePoissonSampling = true
@@ -56,7 +56,7 @@ const loadSceneMock = () => {
 		//	w: 21,
 		//}
 
-		const ground = new BABYLON.MeshBuilder.CreateBox('ground', {
+		/*const ground = new BABYLON.MeshBuilder.CreateBox('ground', {
 			width: 23,
 			height: 1,
 			depth: 27,
@@ -94,7 +94,7 @@ const loadSceneMock = () => {
 		borderRight.material = borderMaterial
 		borderUp.material = borderMaterial
 		ground.material = groundMaterial
-		ground.receiveShadows = true
+		ground.receiveShadows = true*/
 
 		BABYLON.SceneLoader.ImportMesh(
 			'',
@@ -102,10 +102,13 @@ const loadSceneMock = () => {
 			'Basket_Grid.glb',
 			scene,
 			function (meshArray) {
-				ground1 = meshArray[0]
-				ground1.scaling = new BABYLON.Vector3(-5, 5, 5)
-				ground1.rotation.x = (3 * Math.PI) / 2
-				ground1.position = new BABYLON.Vector3(10.5, -2.5, 16.5)
+				ground1 = meshArray[1]
+				ground1.scaling = new BABYLON.Vector3(-5, -5, 5)
+				//ground1.rotate.y = (3 * Math.PI) / 2
+				ground1.position = new BABYLON.Vector3(-10.5, -2.5, 16.5)
+				ground1.receiveShadows = true
+				ground1.castShadow = true
+				shadow.getShadowMap().renderList.push(ground1)
 			}
 		)
 	}
@@ -119,7 +122,7 @@ const loadSceneMock = () => {
 		apple.position.y = 1.2
 
 		let appleMaterial = new BABYLON.StandardMaterial('red')
-		appleMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0)
+		appleMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#a30000')
 		apple.material = appleMaterial
 		//shadow.getShadowMap().renderList.push(apple)
 	}
@@ -152,7 +155,7 @@ const loadSceneMock = () => {
 			{
 				width: 1,
 				height: 0.8,
-				depth: 0.8,
+				depth: 1,
 			},
 			scene
 		)
@@ -171,9 +174,9 @@ const loadSceneMock = () => {
 		const snakeTail = new BABYLON.MeshBuilder.CreateBox(
 			'snakeTail',
 			{
-				width: 0.9,
-				height: 0.6,
-				depth: 0.6,
+				width: 1,
+				height: 0.7,
+				depth: 0.8,
 			},
 			scene
 		)
@@ -261,11 +264,14 @@ class BabylonSnake {
 		this._snakeHeadMesh.material = snakeHeadMaterial
 		this._snakeHeadMesh.scaling = new BABYLON.Vector3(1, 1, 1)
 		const snakeCellMaterial = new BABYLON.StandardMaterial('snakeCellMat')
-		snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
-		//snakeCellMaterial.diffuseTexture = new BABYLON.Texture('./Resources/9268160.jpg')
+		//snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
+		snakeCellMaterial.diffuseTexture = new BABYLON.Texture('./Resources/Textures/9268160.jpg')
 		this._snakeBodyPrefab.material = snakeCellMaterial
 		const orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
-		orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
+		//orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
+		orangeMaterial.diffuseTexture = new BABYLON.Texture(
+			'./Resources/Textures/9268160.jpg'
+		)
 		this._snakeTailMesh.material = orangeMaterial
 
 		//this._scene = loadSceneMock()
@@ -319,7 +325,7 @@ class BabylonSnake {
 			'dirlight',
 			new BABYLON.Vector3(-6.25, -10, 7.8)
 		)
-		this._dirlight.intensity = 0.4
+		this._dirlight.intensity = 0.5
 
 		this._shadow = new BABYLON.ShadowGenerator(512, this._dirlight)
 		this._shadow.usePoissonSampling = true

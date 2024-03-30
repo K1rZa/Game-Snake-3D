@@ -122,7 +122,7 @@ const loadSceneMock = () => {
 		apple.position.y = 1
 
 		let appleMaterial = new BABYLON.StandardMaterial('red')
-		appleMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#ffffff')
+		appleMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#ff5510')
 		apple.material = appleMaterial
 		//shadow.getShadowMap().renderList.push(apple)
 	}
@@ -365,6 +365,7 @@ class BabylonSnake {
 		this._restartBtn.horizontalAlignment = 2
 		this._restartBtn.top = '2.5%'
 		this._restartBtn.fontSize = '2.25%'
+		this._restartBtn.color = '#ffffff'
 		//this._restartBtn.top = '-16px'
 		//when the button is down, make pause menu visable and add control to it
 		this._restartBtn.onPointerDownObservable.add(() => {

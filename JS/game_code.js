@@ -21,7 +21,7 @@ var createDefaultEngine = function () {
 
 const loadSceneMock = () => {
 	const scene = new BABYLON.Scene(engine)
-	scene.clearColor = new BABYLON.Color3.FromHexString('#38597d')
+	scene.clearColor = new BABYLON.Color3.FromHexString('#2d402c')
 
 	const camera = new BABYLON.ArcRotateCamera(
 		'Camera',
@@ -33,7 +33,7 @@ const loadSceneMock = () => {
 	)
 	camera.wheelDeltaPercentage = 0.01
 	camera.setTarget(new BABYLON.Vector3(11, 0.2, 13))
-	camera.attachControl(canvas, true)
+	//camera.attachControl(canvas, true)
 
 	const globallight = new BABYLON.HemisphericLight(
 		'light',
@@ -119,7 +119,7 @@ const loadSceneMock = () => {
 			{ diameter: 1.2, segments: 32 },
 			scene
 		)
-		apple.position.y = 1.2
+		apple.position.y = 1
 
 		let appleMaterial = new BABYLON.StandardMaterial('red')
 		appleMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#a30000')
@@ -131,9 +131,9 @@ const loadSceneMock = () => {
 		const snakeHead = BABYLON.MeshBuilder.CreateBox(
 			'snakeHead',
 			{
-				width: 1,
-				height: 1,
-				depth: 1,
+				width: 1.1,
+				height: 1.1,
+				depth: 1.1,
 			},
 			scene
 		)
@@ -257,7 +257,7 @@ class BabylonSnake {
 		this._snakeHeadDirectionHistory = []
 
 		const snakeHeadMaterial = new BABYLON.StandardMaterial('snakeHeadMat')
-		snakeHeadMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#06819c')
+		snakeHeadMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#008f5b')
 		//snakeHeadMaterial.diffuseTexture = new BABYLON.Texture(
 		//	'./Resources/9268160.jpg'
 		//)
@@ -265,7 +265,9 @@ class BabylonSnake {
 		this._snakeHeadMesh.scaling = new BABYLON.Vector3(1, 1, 1)
 		const snakeCellMaterial = new BABYLON.StandardMaterial('snakeCellMat')
 		//snakeCellMaterial.diffuseColor = new BABYLON.Color3.FromHexString('#09b1d6')
-		snakeCellMaterial.diffuseTexture = new BABYLON.Texture('./Resources/Textures/9268160.jpg')
+		snakeCellMaterial.diffuseTexture = new BABYLON.Texture(
+			'./Resources/Textures/9268160.jpg'
+		)
 		this._snakeBodyPrefab.material = snakeCellMaterial
 		const orangeMaterial = new BABYLON.StandardMaterial('orange', scene)
 		//orangeMaterial.diffuseColor = new BABYLON.Color3(0.97, 0.66, 0.09)
